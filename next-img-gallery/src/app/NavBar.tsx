@@ -19,6 +19,9 @@ const NavBar = () => {
             <Nav.Link as={Link} href='/dynamic'>
               Dynamic
             </Nav.Link>
+            <Nav.Link as={Link} href='/isr'>
+              ISR
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
