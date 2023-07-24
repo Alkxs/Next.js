@@ -16,6 +16,9 @@ const NavBar = () => {
             <Nav.Link as={Link} href='/static'>
               Static
             </Nav.Link>
+            <Nav.Link as={Link} href='/dynamic'>
+              Dynamic
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
