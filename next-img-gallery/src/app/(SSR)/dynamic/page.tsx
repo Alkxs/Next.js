@@ -26,7 +26,7 @@ const Page = async () => {
         This page <strong>fetches data dynamically</strong>. Every time you refresh the page, you get a new image from the Unsplash API.
       </Alert>
       <Image src={data.urls.raw} width={width} height={height} alt={data.description} className='rounded shadow mw-100 h-100' />
-      by <Link href={'/users' + data.user.username}>{data.user.username}</Link>
+      by <Link href={'/users/' + data.user.username}>{data.user.username}</Link>
     </div>
   )
 }
