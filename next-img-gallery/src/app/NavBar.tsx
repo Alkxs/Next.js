@@ -25,6 +25,9 @@ const NavBar = () => {
             <Nav.Link as={Link} href='/topics/zurich'>
               Dynamic routes
             </Nav.Link>
+            <Nav.Link as={Link} href='/search'>
+              Search
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
