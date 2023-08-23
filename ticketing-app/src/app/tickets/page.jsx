@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import TicketList from '../components/TicketList'
-import Loading from '../loading'
+import Loading from '../(homepage)/loading'
 
 const Tickets = () => {
   return (
