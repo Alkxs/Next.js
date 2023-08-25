@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Logo from '../../../public/logo.png'
+import LogoutButton from './LogoutButton'
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   return (
     <nav className='flex items-center justify-between px-8 w-full'>
       <div className='flex items-center justify-center gap-2'>
@@ -13,6 +14,8 @@ const Navbar = () => {
       <div>
         <Link href='/tickets'>Dashboard</Link>
       </div>
+      {user && <span>Hello, {user.email}</span>}
+      <LogoutButton />
     </nav>
   )
 }

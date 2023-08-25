@@ -8,14 +8,12 @@ export default function AuthForm({ handleSubmit }) {
 
   return (
     <form onSubmit={(e) => handleSubmit(e, email, password)}>
-      <label>
-        <span>Email:</span>
-        <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </label>
-      <label>
-        <span>Password:</span>
-        <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
-      </label>
+      <label>Email:</label>
+      <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+      <label>Password:</label>
+      <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+
       <button className='bg-violet-800 text-gray-200'>Submit</button>
     </form>
   )
