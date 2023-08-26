@@ -15,20 +15,21 @@ export default function CreateForm() {
     e.preventDefault()
     setIsLoading(true)
 
-    const ticket = {
-      title,
-      body,
-      priority,
-      user_email: 'alex@alex.dev',
-    }
+    const newTicket = { title, body, priority, user_email: 'alex@lori.dev' }
 
-    const res = await fetch('http://localhost:4000/tickets', {
+    const res = await fetch('http://localhost:3000/api/tickets', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ticket),
+      body: JSON.stringify(newTicket),
     })
 
-    if (res.status === 201) {
+    const json = await res.json()
+    if (json.error) {
+      console.error('Error creating ticket:', json.error, json)
+
+      setIsLoading(false)
+    }
+    if (json.data) {
       router.refresh()
       router.push('/tickets')
     }
@@ -52,7 +53,7 @@ export default function CreateForm() {
           <option value='high'>High Priority</option>
         </select>
       </label>
-      <button className='btn-primary' disabled={isLoading}>
+      <button className='bg-violet-800 text-gray-200' disabled={isLoading}>
         {isLoading && <span>Adding...</span>}
         {!isLoading && <span>Add Ticket</span>}
       </button>

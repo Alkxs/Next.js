@@ -1,27 +1,29 @@
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export async function generateStaticParams() {
-  const res = await fetch('http://localhost:4000/tickets')
+export const dynamicParams = true
 
-  const tickets = await res.json()
+export async function generateMetadata({ params }) {
+  const supabase = createServerComponentClient({ cookies })
 
-  return tickets.map((ticket) => ({
-    id: ticket.id,
-  }))
+  const { data: ticket } = await supabase.from('tickets').select().eq('id', params.id).single()
+
+  return {
+    title: `Tickster | ${ticket?.title || 'Ticket not Found'}`,
+  }
 }
 
 async function getTicket(id) {
-  const res = await fetch('http://localhost:4000/tickets/' + id, {
-    next: {
-      revalidate: 60,
-    },
-  })
+  const supabase = createServerComponentClient({ cookies })
 
-  if (!res.ok) {
+  const { data } = await supabase.from('tickets').select().eq('id', id).single()
+
+  if (!data) {
     notFound()
   }
 
-  return res.json()
+  return data
 }
 
 export default async function TicketDetails({ params }) {
@@ -30,11 +32,11 @@ export default async function TicketDetails({ params }) {
   return (
     <main>
       <nav>
-        <h2>Ticket details</h2>
+        <h2>Ticket Details</h2>
       </nav>
       <div className='card'>
         <h3>{ticket.title}</h3>
-        <small>created by {ticket.user_email}</small>
+        <small>Created by {ticket.user_email}</small>
         <p>{ticket.body}</p>
         <div className={`pill ${ticket.priority}`}>{ticket.priority} priority</div>
       </div>
