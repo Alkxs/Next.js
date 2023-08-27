@@ -1,9 +1,10 @@
-import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-
 export async function POST(request) {
   const ticket = await request.json()
+  console.log('Received ticket:', ticket) // Logging input data
+
+  // Log cookies
+  const cookies = request.headers.cookie
+  console.log('Cookies:', cookies)
 
   // get supabase instance
   const supabase = createRouteHandlerClient({ cookies })
@@ -12,6 +13,7 @@ export async function POST(request) {
   const {
     data: { session },
   } = await supabase.auth.getSession()
+  console.log('Session:', session) // Logging session
 
   // insert the data
   const { data, error } = await supabase
@@ -23,5 +25,10 @@ export async function POST(request) {
     .select()
     .single()
 
-  return NextResponse.json({ data, error })
+  if (error) {
+    console.error('Supabase insert error:', error) // Logging Supabase error
+    return NextResponse.json({ error: error.message })
+  }
+
+  return NextResponse.json({ data })
 }

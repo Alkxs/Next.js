@@ -15,17 +15,22 @@ export default function CreateForm() {
     e.preventDefault()
     setIsLoading(true)
 
-    const newTicket = { title, body, priority, user_email: 'alex@lori.dev' }
+    const newTicket = { title, body, priority }
 
     const res = await fetch('http://localhost:3000/api/tickets', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(newTicket),
+      credentials: 'same-origin',
     })
 
     const json = await res.json()
+    console.log(json)
+
     if (json.error) {
-      console.error('Error creating ticket:', json.error, json)
+      console.error(json)
 
       setIsLoading(false)
     }
