@@ -8,7 +8,7 @@ async function getTickets() {
   const { data, error } = await supabase.from('tickets').select()
 
   if (error) {
-    console.log('error.message')
+    console.log(error.message)
   }
 
   return data
@@ -18,7 +18,7 @@ export default async function TicketList() {
   const tickets = await getTickets()
 
   return (
-    <div>
+    <>
       {tickets.map((ticket) => (
         <div key={ticket.id} className='card my-5'>
           <Link href={`/tickets/${ticket.id}`}>
@@ -28,7 +28,7 @@ export default async function TicketList() {
           </Link>
         </div>
       ))}
-      {tickets.length === 0 && <p className='text-center'>No tickets found, good for you!</p>}
-    </div>
+      {tickets.length === 0 && <p className='text-center'>There are no open tickets, yay!</p>}
+    </>
   )
 }
